@@ -1,0 +1,36 @@
+import wollok.game.*
+import auto.*
+import paredAzul.*
+import autoEnemigo.*
+import contador.*
+
+program miPrimerWollokGame {
+	game.title("auto chocador")
+	
+	
+	//limites tablero
+	game.width(14)
+	game.height(8)
+	
+	//fondo del tablero de juego
+	game.boardGround("empedrado.jpg")
+	
+	//agregamos a nuestro objetos
+	game.addVisual(auto)
+	game.addVisual(enemigo)
+	game.addVisual(contador)
+	
+	//movimiento del auto enemigo
+	game.onTick(250,"persuit",{enemigo.persuit()})
+	
+	//contador
+	game.onTick(1000,"conta",{ => game.say(contador,contador.contar().stringValue())})
+	
+	//movimiento auto propio
+	auto.movement()
+	
+	//condicion de game over
+	game.whenCollideDo(auto, {element => game.stop()})
+	
+	game.start()
+}
